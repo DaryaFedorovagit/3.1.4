@@ -6,19 +6,23 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.Set;
 
-@Entity
-@Table(name = "usersbut")
-public class User implements UserDetails {
 
+@Entity
+@Table(name = "users")
+public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String name;
+
+    @Column(name = "email")
+    private String username;
+    private String firstName;
+    private Long telephone;
     private Long age;
-    private String email;
+
     private String password;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -27,30 +31,36 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String name, Long age, String email, String password, Collection<Role> roles) {
-        this.name = name;
+    public User(String firstName, Long telephone, Long age, String password, String username, Collection<Role> roles) {
+        this.firstName = firstName;
+        this.telephone = telephone;
         this.age = age;
-        this.email = email;
+        this.username = username;
         this.password = password;
         this.roles = roles;
     }
-
-    public Long getId() {
-        return id;
+    public User(String firstName, Long telephone, Long age, String username) {
+        this.firstName = firstName;
+        this.telephone = telephone;
+        this.age = age;
+        this.username = username;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    public Long getTelephone() {
+        return telephone;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTelephone(Long telephone) {
+        this.telephone = telephone;
     }
-
     public Long getAge() {
         return age;
     }
@@ -59,36 +69,19 @@ public class User implements UserDetails {
         this.age = age;
     }
 
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-
-    @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public Long getId() {
+        return id;
+    }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
@@ -111,12 +104,39 @@ public class User implements UserDetails {
         return true;
     }
 
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Collection<Role> getRoles() {
         return roles;
     }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
-
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", age=" + age +
+                ", email='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
