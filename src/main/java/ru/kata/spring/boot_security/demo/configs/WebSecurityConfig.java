@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.configs;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,9 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/api/admin/**").hasRole("ADMIN")
-                .antMatchers("/api/user/**").hasAnyRole("USER","ADMIN")
+                .antMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                 .and()
                 .formLogin()
                 .successHandler(successUserHandler)
@@ -49,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();

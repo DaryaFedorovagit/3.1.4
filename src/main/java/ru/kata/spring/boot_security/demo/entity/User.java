@@ -4,7 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 
 @Entity
@@ -39,6 +38,7 @@ public class User implements UserDetails {
         this.password = password;
         this.roles = roles;
     }
+
     public User(String firstName, Long telephone, Long age, String username) {
         this.firstName = firstName;
         this.telephone = telephone;
@@ -46,6 +46,11 @@ public class User implements UserDetails {
         this.username = username;
     }
 
+    public User(String username, String password, Collection<Role> roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -54,6 +59,7 @@ public class User implements UserDetails {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+
     public Long getTelephone() {
         return telephone;
     }
@@ -61,6 +67,7 @@ public class User implements UserDetails {
     public void setTelephone(Long telephone) {
         this.telephone = telephone;
     }
+
     public Long getAge() {
         return age;
     }
@@ -76,6 +83,7 @@ public class User implements UserDetails {
     public void setUsername(String username) {
         this.username = username;
     }
+
     public Long getId() {
         return id;
     }
@@ -105,7 +113,6 @@ public class User implements UserDetails {
     }
 
 
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
@@ -123,7 +130,7 @@ public class User implements UserDetails {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 

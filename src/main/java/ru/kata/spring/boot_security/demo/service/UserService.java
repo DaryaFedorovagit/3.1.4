@@ -15,13 +15,14 @@ public interface UserService extends UserDetailsService {
     void addUser(User user);
 
     void updateUser(User user);
-
-    User findByEmail(String username);
-
+    void saveUser(User user);
     void removeUser(Long id);
+    User findByEmail(String username);
 
     List<Role> roleList();
 
     @Override
     UserDetails loadUserByUsername(String username);
+
+
 }

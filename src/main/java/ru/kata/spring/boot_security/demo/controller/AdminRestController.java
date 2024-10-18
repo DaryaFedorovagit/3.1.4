@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 import java.util.List;
 
 @RestController
@@ -25,7 +26,7 @@ public class AdminRestController {
     }
 
     @GetMapping("/api/admin/{id}")
-    public User getUserById(@PathVariable  Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
